@@ -290,7 +290,36 @@ do
                 break;
             }
         case 3:
-            {
+            { 
+                if (contadorImpactoAlto== 0 && contadorImppactoMedio ==0 && contadorImpactoBajo==0)
+                {
+                    ImpactoPredominante = "Sin datos";
+                }
+                else
+                {
+                    if (contadorImpactoAlto >= contadorImppactoMedio && contadorImpactoAlto >= contadorImpactoBajo)
+                    {
+                        ImpactoPredominante = "Impacto Alto";
+                    }
+                    else if (contadorImppactoMedio >= contadorImpactoAlto && contadorImppactoMedio >= contadorImpactoBajo)
+                    {
+                        ImpactoPredominante = "Impacto Medio";
+                    }
+                    else
+                    {
+                        ImpactoPredominante = "Impacto Bajo";
+                    }
+                }
+
+                if (contadorPublicados>0 && contadorTotalEvaluados>0)
+                {
+                    porcentajeAprobacion = contadorPublicados / contadorTotalEvaluados;
+                }
+                else
+                {
+                    porcentajeAprobacion = 0;
+                }
+
                 Console.WriteLine("Mostrar estadísticas de la sesión");
                 Console.WriteLine($"Total evaluados: {contadorTotalEvaluados}");
                 Console.WriteLine($"Total Publicados: {contadorPublicados}");
@@ -314,6 +343,35 @@ do
             }
         case 5:
             {
+                if (contadorImpactoAlto >= 0 && contadorImppactoMedio >= 0 && contadorImpactoBajo >= 0)
+                {
+                    if (contadorImpactoAlto >= contadorImppactoMedio && contadorImpactoAlto >= contadorImpactoBajo)
+                    {
+                        ImpactoPredominante = "Impacto Alto";
+                    }
+                    else if (contadorImppactoMedio >= contadorImpactoAlto && contadorImppactoMedio >= contadorImpactoBajo)
+                    {
+                        ImpactoPredominante = "Impacto Medio";
+                    }
+                    else
+                    {
+                        ImpactoPredominante = "Impacto Bajo";
+                    }
+                }
+                else
+                {
+                    ImpactoPredominante = "Sin datos";
+                }
+
+                if (contadorPublicados > 0 && contadorTotalEvaluados > 0)
+                {
+                    porcentajeAprobacion = contadorPublicados / contadorTotalEvaluados;
+                }
+                else
+                {
+                    porcentajeAprobacion = 0;
+                }
+
                 Console.WriteLine("Resumen Final");
                 Console.WriteLine("Mostrar estadísticas de la sesión");
                 Console.WriteLine($"Total evaluados: {contadorTotalEvaluados}");
