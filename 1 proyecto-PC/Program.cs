@@ -1,5 +1,19 @@
 ﻿int opcion = 0;
 bool correcto;
+
+double contadorTotalEvaluados = 0;
+double contadorPublicados = 0;
+int contadorRechazados = 0;
+int contadorEnRevision = 0;
+
+int contadorImpactoAlto = 0;
+int contadorImppactoMedio = 0;
+int contadorImpactoBajo = 0;
+
+string ImpactoPredominante;
+
+double porcentajeAprobacion;
+
 do
 {
     Console.WriteLine();
@@ -79,7 +93,7 @@ do
                     bool correctoCedad;
                     while (true)
                     {
-                        Console.WriteLine("Ingrese la clasificación por edad: (1 a +18) ");
+                        Console.WriteLine("Ingrese la clasificación por edad: (mayor a 0 y menor a 120)");
                         correctoCedad = int.TryParse(Console.ReadLine(), out clasificacionEdad);
                         if (correctoCedad && clasificacionEdad > 0 &&clasificacionEdad<120)
                         {
@@ -225,14 +239,17 @@ do
                     {
                         if (impactoAlto)
                         {
+                            contadorImpactoAlto++;
                             return "Impacto Alto";
                         }
                         else if (impactoMedio)
                         {
+                            contadorImppactoMedio++;
                             return "Impacto Medio";
                         }
                         else
                         {
+                            contadorImpactoBajo++;
                             return "Impacto Bajo";
                         }
                     }
@@ -241,24 +258,29 @@ do
 
                 string decisionFinal()
                 {
+                    contadorTotalEvaluados++;
                     if (!resultadosValidacionTecnica)
                     {
                         Console.WriteLine("Rechazar-Incumple alguna regla obligatoria");
+                        contadorRechazados++;
                         return "Rechazar";
                     }
                     else if (impactoAlto)
                     {
                         Console.WriteLine("Enviar a revisión-Impacto alto");
+                        contadorEnRevision++;
                         return "Enviar a revisión";
                     }
                     else if (impactoMedio || impactoBajo)
                     {
                         Console.WriteLine("Publicar: Cumple reglas técnicas e impacto adecuado");
+                        contadorPublicados++;
                         return "Publicar";
                     }
 
                     Console.WriteLine("Publicar con ajustes: Requiere modificación menor");
                     return "Publicar con ajustes";
+
                 }
                 resultadoDecisionFinal = decisionFinal();
                 break;
@@ -269,14 +291,37 @@ do
             }
         case 3:
             {
+                Console.WriteLine("Mostrar estadísticas de la sesión");
+                Console.WriteLine($"Total evaluados: {contadorTotalEvaluados}");
+                Console.WriteLine($"Total Publicados: {contadorPublicados}");
+                Console.WriteLine($"Total rechazados: {contadorRechazados}");
+                Console.WriteLine($"Total en revision: {contadorEnRevision}");
+                Console.WriteLine($"Impacto predominante: {ImpactoPredominante}");
+                Console.WriteLine($"Porcentaje de aprobacion: {porcentajeAprobacion}");
                 break;
             }
         case 4:
             {
+                contadorTotalEvaluados = 0;
+                contadorPublicados = 0;
+                contadorRechazados = 0;
+                contadorEnRevision = 0;
+                contadorImpactoAlto = 0;
+                contadorImppactoMedio = 0;
+                contadorImpactoBajo = 0;
+                Console.WriteLine("Se logrado con exito el reinicio de estadisticas");
                 break;
             }
         case 5:
             {
+                Console.WriteLine("Resumen Final");
+                Console.WriteLine("Mostrar estadísticas de la sesión");
+                Console.WriteLine($"Total evaluados: {contadorTotalEvaluados}");
+                Console.WriteLine($"Total Publicados: {contadorPublicados}");
+                Console.WriteLine($"Total rechazados: {contadorRechazados}");
+                Console.WriteLine($"Total en revision: {contadorEnRevision}");
+                Console.WriteLine($"Impacto predominante: {ImpactoPredominante}");
+                Console.WriteLine($"Porcentaje de aprobacion: {porcentajeAprobacion}");
                 Console.WriteLine("Salida");
                 break;
             }
