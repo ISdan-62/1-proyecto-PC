@@ -1,6 +1,8 @@
 ﻿int opcion = 0;
+bool correcto;
 do
 {
+    Console.WriteLine();
     Console.WriteLine("MENU");
     Console.WriteLine("1. Evaluar nuevo contenido");
     Console.WriteLine("2. Mostrar reglas del sistema");
@@ -8,192 +10,218 @@ do
     Console.WriteLine("4. Reiniciar estadísticas");
     Console.WriteLine("5. Salir");
     Console.Write("Elegir la opcion a realizar: ");
-    opcion=int.Parse(Console.ReadLine());
+    correcto=int.TryParse(Console.ReadLine(), out opcion);
     Console.WriteLine();
     switch (opcion)
     {
         case 1:
             {
-                string tipoContenido;
-                bool correctoTipoContenido;
                 string resultadoTipoContenido;
-
-                double duracionMinutos = 0;
-                double resultadoDuracionMinutos = 0;
-
-                string clasificacionEdad;
+                double resultadoDuracionMinutos;
                 string resultadoClasificacionEdad;
-
-                int horaProgamada = 0;
-                int resultadoHoraProgamada = 0;
-
-                string nivelProduccion;
+                int resultadoHoraProgamada;
                 string resultadoNivelProduccion;
 
-                bool clasificacioYhorario = false;
-                bool validacionNivelP = false;
-                bool duraciónYcontenido = false;
-
-                bool reultadosValidacionTecnica;
+                bool resultadosValidacionTecnica;
 
                 string resultadoClasificacionImpacto;
 
-                Console.WriteLine("Ingrese el tipo de contenido:  (Pelicula, Serie, Documental, Evento en vivo) ");
-                tipoContenido = Console.ReadLine().ToLower();
-                string evaluarTipoContenido(string tipoContenido)
-                {
-                    while (tipoContenido != "pelicula" && tipoContenido != "serie" && tipoContenido != "documental" && tipoContenido != "evento en vivo")
-                    {
-                        Console.WriteLine("Contenido inválido. Intente nuevamente:");
-                        tipoContenido = Console.ReadLine().ToLower ();
-                    }
-                    return tipoContenido;
-                }
-                resultadoTipoContenido = evaluarTipoContenido(tipoContenido);
+                string resultadoDecisionFinal;
 
-                Console.WriteLine("Ingrese la duracion en minutos: (0-240) ");
-                duracionMinutos=double.Parse(Console.ReadLine());
-                double evaluarDuracionMinutos(double duracionMinutos)
+                string evaluarTipoContenido()
                 {
-                    while (duracionMinutos <= 0 || duracionMinutos >= 240)
+                    string tipoContenido;
+                    while (true)
                     {
-                        Console.WriteLine("Duración inválida. Intente nuevamente:");
-                        duracionMinutos = double.Parse(Console.ReadLine());
-                    }
-                    return duracionMinutos;
-                }
-                resultadoDuracionMinutos=evaluarDuracionMinutos(duracionMinutos);
-
-                Console.WriteLine("Ingrese la clasificación por edad: (todo público, +13, +18) ");
-                clasificacionEdad = Console.ReadLine();
-                string evaluarClasificacionEdad(string clasificacionEdad)
-                {
-                    while (clasificacionEdad!="Todo publico" && clasificacionEdad!="+13" && clasificacionEdad!="+18")
-                    {
-                        Console.WriteLine("Clasificacion inválida. Intente nuevamente:");
-                        clasificacionEdad = Console.ReadLine();
-                    }
-                    return clasificacionEdad;
-                }
-                resultadoClasificacionEdad = evaluarClasificacionEdad(clasificacionEdad);
-
-                Console.WriteLine("Ingrese la hora programa: (0-23) ");
-                horaProgamada = int.Parse(Console.ReadLine());
-                int evaluarHoraProgamada(int horaProgamada)
-                {
-                    while (horaProgamada <= 0 || duracionMinutos >= 23)
-                    {
-                        Console.WriteLine("Hora rogamada inválida. Intente nuevamente:");
-                        horaProgamada = int.Parse(Console.ReadLine());
-                    }
-                    return horaProgamada;
-                }
-                resultadoHoraProgamada = evaluarHoraProgamada(horaProgamada);
-
-                Console.WriteLine("Ingrese la clasificación por edad: (Bajo, Medio, Alto) ");
-                nivelProduccion = Console.ReadLine().ToLower();
-                string evaluarNivelProduccion(string nivelProduccion)
-                {
-                    while (nivelProduccion != "Bajo" && nivelProduccion != "Medio" && nivelProduccion != "Alto")
-                    {
-                        Console.WriteLine("Clasificacion inválida. Intente nuevamente:");
-                        nivelProduccion = Console.ReadLine();
-                    }
-                    return nivelProduccion;
-                }
-                resultadoNivelProduccion = evaluarNivelProduccion(nivelProduccion);
-
-                bool validacionTecnica(bool clasificacioYhorario, bool validacionNivelP, bool duraciónYcontenido)
-                {
-                    if (resultadoClasificacionEdad == "Todo publico")
-                    {
-                        if (resultadoHoraProgamada >= 0 && resultadoHoraProgamada <= 23)
+                        Console.WriteLine("Ingrese el tipo de contenido:  (Pelicula, Serie, Documental, Evento en vivo) ");
+                        tipoContenido = Console.ReadLine().ToLower();
+                        if (tipoContenido == "pelicula" || tipoContenido == "serie" || tipoContenido == "documental" || tipoContenido == "evento en vivo")
                         {
-                            clasificacioYhorario = true;
+                            return tipoContenido;
                         }
-
-                    }
-                    else if (resultadoClasificacionEdad == "+13")
-                    {
-                        if (resultadoHoraProgamada >= 6 && resultadoHoraProgamada <= 22)
+                        else
                         {
-                            clasificacioYhorario = true;
+                            Console.WriteLine("Contenido inválido...");
+                            Console.WriteLine("Presione cualquier tecla para volver a intentar");
+                            Console.ReadKey();
+                            Console.Clear();
                         }
                     }
-                    else if (resultadoClasificacionEdad == "+18")
+                }
+                resultadoTipoContenido = evaluarTipoContenido();
+
+                double evaluarDuracionMinutos()
+                {
+                    double duracionMinutos;
+                    bool correctoDminutos;
+                    while (true)
                     {
-                        if (resultadoHoraProgamada >= 22 && resultadoHoraProgamada <= 5)
+                        Console.WriteLine("Ingrese la duracion en minutos: (0-240) ");
+                        correctoDminutos = double.TryParse(Console.ReadLine(), out duracionMinutos);
+                        if (correctoDminutos && duracionMinutos >= 0 && duracionMinutos <= 240)
                         {
-                            clasificacioYhorario = true;
+                            return duracionMinutos;
                         }
+                        else
+                        {
+                            Console.WriteLine("Duración inválida. Intente nuevamente:");
+                            Console.WriteLine("Presione cualquier tecla para volver a intentar");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                }
+                resultadoDuracionMinutos=evaluarDuracionMinutos();
+
+                string evaluarClasificacionEdad()
+                {
+                    int clasificacionEdad;
+                    bool correctoCedad;
+                    while (true)
+                    {
+                        Console.WriteLine("Ingrese la clasificación por edad: (1 a +18) ");
+                        correctoCedad = int.TryParse(Console.ReadLine(), out clasificacionEdad);
+                        if (correctoCedad && clasificacionEdad > 0 &&clasificacionEdad<120)
+                        {
+                            if (clasificacionEdad>18)
+                            {
+                                return "+18";
+                            }
+                            else if (clasificacionEdad>13)
+                            {
+                                return "+13";
+                            }
+                            else
+                            {
+                                return "Todo publico";
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Edad inválida. Intente nuevamente:");
+                            Console.WriteLine("Presione cualquier tecla para volver a intentar");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                }
+                resultadoClasificacionEdad = evaluarClasificacionEdad();
+
+                int evaluarHoraProgamada()
+                {
+                    int horaProgamada;
+                    bool correctoHoraProgamada;
+                    while (true)
+                    {
+                        Console.WriteLine("Ingrese la hora programa: (0-23) ");
+                        correctoHoraProgamada=int.TryParse(Console.ReadLine(),out horaProgamada);
+                        if (correctoHoraProgamada && horaProgamada>=0 && horaProgamada<=23)
+                        {
+                            return horaProgamada;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Hora rogamada inválida. Intente nuevamente:");
+                            Console.WriteLine("Presione cualquier tecla para volver a intentar");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                }
+                resultadoHoraProgamada = evaluarHoraProgamada();
+
+                string evaluarNivelProduccion()
+                {
+                    string nivelProduccion;
+                    while (true)
+                    {
+                        Console.WriteLine("Ingrese la clasificación por edad: (bajo, medio, alto) ");
+                        nivelProduccion = Console.ReadLine().ToLower();
+                        if (nivelProduccion == "bajo" || nivelProduccion == "medio"|| nivelProduccion=="alto")
+                        {
+                            return nivelProduccion;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Clasificacion inválida. Intente nuevamente:");
+                            Console.WriteLine("Presione cualquier tecla para volver a intentar");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                }
+                resultadoNivelProduccion = evaluarNivelProduccion();
+
+                bool validacionTecnica()
+                {
+                    bool clasificacioYhorario;
+                    bool validacionNivelP;
+                    bool duraciónYcontenido;
+
+                    if (resultadoClasificacionEdad == "Todo publico" &&resultadoHoraProgamada >= 0 && resultadoHoraProgamada <= 23)
+                    {
+                        clasificacioYhorario = true;
+                    }
+                    else if (resultadoClasificacionEdad == "+13"&&resultadoHoraProgamada >= 6 && resultadoHoraProgamada <= 22)
+                    {
+                        clasificacioYhorario = true;
+                    }
+                    else if (resultadoClasificacionEdad == "+18" && (resultadoHoraProgamada >= 22 || resultadoHoraProgamada <= 5))
+                    {
+                        clasificacioYhorario = true;
                     }
                     else
                     {
                         clasificacioYhorario = false;
                     }
 
-                    if (resultadoTipoContenido == "Pelicula")
+                    if (resultadoTipoContenido == "pelicula"&& resultadoDuracionMinutos >= 60 && resultadoDuracionMinutos <= 180)
                     {
-                        if (resultadoDuracionMinutos >= 60 && resultadoDuracionMinutos <= 180)
-                        {
-                            duraciónYcontenido = true;
-                        }
+                        duraciónYcontenido = true;
                     }
-                    else if (resultadoTipoContenido == "Serie")
+                    else if (resultadoTipoContenido == "serie"&& resultadoDuracionMinutos >= 20 && resultadoDuracionMinutos <= 90)
                     {
-                        if (resultadoDuracionMinutos >= 20 && resultadoDuracionMinutos <= 90)
-                        {
-                            duraciónYcontenido = true;
-                        }
+                        duraciónYcontenido = true;
                     }
-                    else if (resultadoTipoContenido == "Documental")
+                    else if (resultadoTipoContenido == "documental"&& resultadoDuracionMinutos >= 30 && resultadoDuracionMinutos <= 120)
                     {
-                        if (resultadoDuracionMinutos >= 30 && resultadoDuracionMinutos <= 120)
-                        {
-                            duraciónYcontenido = true;
-                        }
+                        duraciónYcontenido = true;
                     }
-                    else if (resultadoTipoContenido == "Evento en vivo")
+                    else if (resultadoTipoContenido == "evento en vivo"&& resultadoDuracionMinutos >= 30 && resultadoDuracionMinutos <= 240)
                     {
-                        if (resultadoDuracionMinutos >= 30 && resultadoDuracionMinutos <= 240)
-                        {
-                            duraciónYcontenido = true;
-                        }
+                        duraciónYcontenido = true;
                     }
                     else
                     {
                         duraciónYcontenido = false;
                     }
 
-                    if (resultadoNivelProduccion == "Bajo")
+                    if (resultadoNivelProduccion == "bajo" && (resultadoClasificacionEdad == "Todo publico" || resultadoClasificacionEdad == "+13"))
                     {
-                        if (resultadoClasificacionEdad == "Todo publico")
-                        {
-                            validacionNivelP = true;
-                        }
+                        validacionNivelP = true;
                     }
-                    else if (resultadoNivelProduccion == "Medio" || resultadoNivelProduccion == "Alto")
+                    else if (resultadoNivelProduccion == "medio" || resultadoNivelProduccion == "alto")
                     {
-                        if (resultadoClasificacionEdad == "+13" && resultadoClasificacionEdad == "+18")
-                        {
-                            validacionNivelP = true;
-                        }
+                        validacionNivelP = true;
                     }
                     else
                     {
                         validacionNivelP = false;
                     }
-
                     return duraciónYcontenido && clasificacioYhorario && validacionNivelP;
                 }
-                reultadosValidacionTecnica = validacionTecnica(clasificacioYhorario, validacionNivelP, duraciónYcontenido);
+                resultadosValidacionTecnica = validacionTecnica();
 
-                bool impactoAlto = resultadoNivelProduccion == "Alto" || resultadoDuracionMinutos > 120 || (resultadoHoraProgamada >= 20 && resultadoHoraProgamada <= 23);
-                bool impactoMedio = resultadoNivelProduccion == "Medio" || (resultadoDuracionMinutos >= 60 && resultadoDuracionMinutos <= 120);
-                bool impactoBajo = resultadoNivelProduccion == "Bajo" && resultadoDuracionMinutos < 60;
+                bool impactoAlto = resultadoNivelProduccion == "alto" || resultadoDuracionMinutos > 120 || (resultadoHoraProgamada >= 20 && resultadoHoraProgamada <= 23);
+                bool impactoMedio = resultadoNivelProduccion == "medio" || resultadoDuracionMinutos >= 60 && resultadoDuracionMinutos <= 120;
+                bool impactoBajo = resultadoNivelProduccion == "bajo" && resultadoDuracionMinutos < 60;
                 string clasificacionImpacto(bool impactoAlto, bool impactoMedio, bool impactoBajo)
                 {
-                    if (clasificacioYhorario && duraciónYcontenido && validacionNivelP)
+                    if (!resultadosValidacionTecnica)
+                    {
+                        return "No válido";
+                    }
+                    else
                     {
                         if (impactoAlto)
                         {
@@ -203,17 +231,36 @@ do
                         {
                             return "Impacto Medio";
                         }
-                        else if (impactoBajo)
+                        else
                         {
-                            return "Bajo";
+                            return "Impacto Bajo";
                         }
                     }
-                    return "No válido";
                 }
                 resultadoClasificacionImpacto = clasificacionImpacto(impactoAlto, impactoMedio, impactoBajo);
 
+                string decisionFinal()
+                {
+                    if (!resultadosValidacionTecnica)
+                    {
+                        Console.WriteLine("Rechazar-Incumple alguna regla obligatoria");
+                        return "Rechazar";
+                    }
+                    else if (impactoAlto)
+                    {
+                        Console.WriteLine("Enviar a revisión-Impacto alto");
+                        return "Enviar a revisión";
+                    }
+                    else if (impactoMedio || impactoBajo)
+                    {
+                        Console.WriteLine("Publicar: Cumple reglas técnicas e impacto adecuado");
+                        return "Publicar";
+                    }
 
-
+                    Console.WriteLine("Publicar con ajustes: Requiere modificación menor");
+                    return "Publicar con ajustes";
+                }
+                resultadoDecisionFinal = decisionFinal();
                 break;
             }
         case 2:
