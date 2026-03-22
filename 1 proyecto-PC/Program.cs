@@ -287,6 +287,31 @@ do
             }
         case 2:
             {
+                Console.WriteLine("Se solicita: 1. Tipo de contenido (película, serie, documental, evento en vivo) 2. Duración en minutos(0-240) 3. Clasificación de edad (todo público, +13, +18) 4. Hora programada (0-23) 5. Nivel de producción (bajo, medio, alto)");
+                Console.WriteLine();
+                Console.WriteLine("a) Validación técnica-Se determinar si el contenido puede considerarse publicable según reglas obligatorias definidas por el sistema, las cuales deben aplicarse siempre:");
+                Console.WriteLine("");
+                Console.WriteLine("Reglas de clasificación y horario = Todo público: cualquier hora / +13: entre 6 y 22 horas / +18: entre 22 y 5 horas");
+                Console.WriteLine("Reglas de duración por tipo = Película: 60–180 minutos / Serie: 20–90 minutos / Documental: 30–120 minutos / Evento en vivo: 30–240 minutos (Si la duración está fuera del rango permitido, el contenido no cumple la validación técnica.) ");
+                Console.WriteLine("Reglas de producción = Producción baja solo válida para Todo público o +13 / Producción media o alta válida para cualquier clasificación ");
+                Console.WriteLine("(Si el contenido incumple alguna regla obligatoria, la decisión final será Rechazar y no continuará al análisis de impacto. Solo los contenidos que cumplen todas las reglas técnicas continúan a la clasificación de impacto)");
+                Console.WriteLine("");
+                Console.WriteLine("b) Clasificación de impacto = Determinar si el contenido tiene impacto Bajo, Medio o Alto según:");
+                Console.WriteLine("");
+                Console.WriteLine("Impacto Alto: producción alta, o duración mayor a 120 minutos, o programado entre 20 y 23 horas. ");
+                Console.WriteLine("Impacto Medio: producción media o duración entre 60 y 120 minutos.");
+                Console.WriteLine("Impacto Bajo: producción baja y duración menor a 60 minutos. ");
+                Console.WriteLine("(Si cumple condiciones de varios niveles, se toma el nivel más alto)");
+                Console.WriteLine("");
+                Console.WriteLine("c) Decisión final = Mostrar una decisión según los resultados:");
+                Console.WriteLine("Publicar: cumple todas las reglas técnicas y su impacto es Bajo o Medio.");
+                Console.WriteLine("Publicar con ajustes: cumple reglas técnicas, pero requiere modificación menor (ejemplo: ajustar horario permitido o duración dentro del rango)");
+                Console.WriteLine("Enviar a revisión: cumple reglas técnicas, pero tiene impacto Alto");
+                Console.WriteLine("Rechazar: incumple alguna regla obligatoria");
+                Console.WriteLine("");
+                Console.WriteLine("(Siempre debe mostrarse la razón)");
+                Console.WriteLine("");
+                Console.WriteLine("Después de cada evaluación deben actualizarse las estadísticas globales: Total evaluados / Publicados / Rechazados / En revisión / Impacto predominante / Porcentaje de aprobación ");
                 break;
             }
         case 3:
@@ -343,7 +368,11 @@ do
             }
         case 5:
             {
-                if (contadorImpactoAlto >= 0 && contadorImppactoMedio >= 0 && contadorImpactoBajo >= 0)
+                if (contadorImpactoAlto == 0 && contadorImppactoMedio == 0 && contadorImpactoBajo == 0)
+                {
+                    ImpactoPredominante = "Sin datos";
+                }
+                else
                 {
                     if (contadorImpactoAlto >= contadorImppactoMedio && contadorImpactoAlto >= contadorImpactoBajo)
                     {
@@ -357,10 +386,6 @@ do
                     {
                         ImpactoPredominante = "Impacto Bajo";
                     }
-                }
-                else
-                {
-                    ImpactoPredominante = "Sin datos";
                 }
 
                 if (contadorPublicados > 0 && contadorTotalEvaluados > 0)
