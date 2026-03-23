@@ -14,6 +14,8 @@ string ImpactoPredominante;
 
 double porcentajeAprobacion;
 
+int intentos = 10;
+
 do
 {
     Console.WriteLine();
@@ -356,33 +358,41 @@ do
             }
         case 4:
             {
-                int intentos = 3;
-                int contadorIntentos = 1;
-                for (contadorIntentos=1; contadorIntentos<=intentos; contadorIntentos++)
+                if (intentos > 0)
                 {
-                    int PIN;
-                    bool correctoPIN;
-                    Console.WriteLine("Ingrese el PIn correspondiente para porder reiniciar las estadisticas: ");
-                    correcto=int.TryParse( Console.ReadLine(), out PIN);
-                    if (PIN==1234)
+                    for (int contadorIntentos = 1; contadorIntentos <= intentos; contadorIntentos++)
                     {
-                        contadorTotalEvaluados = 0;
-                        contadorPublicados = 0;
-                        contadorRechazados = 0;
-                        contadorEnRevision = 0;
-                        contadorImpactoAlto = 0;
-                        contadorImppactoMedio = 0;
-                        contadorImpactoBajo = 0;
-                        Console.WriteLine("Se logrado con exito el reinicio de estadisticas");
-                        break;
+                        int PIN;
+                        bool correctoPIN;
+
+                        Console.WriteLine("Ingrese el PIN correspondiente para poder reiniciar las estadísticas:");
+                        correctoPIN = int.TryParse(Console.ReadLine(), out PIN);
+                        if (PIN == 1234)
+                        {
+                            contadorTotalEvaluados = 0;
+                            contadorPublicados = 0;
+                            contadorRechazados = 0;
+                            contadorEnRevision = 0;
+                            contadorImpactoAlto = 0;
+                            contadorImppactoMedio = 0;
+                            contadorImpactoBajo = 0;
+
+                            Console.WriteLine("Se logró con éxito el reinicio de estadísticas");
+                            break;
+                        }
+                        else
+                        {
+                            int restantes = intentos - contadorIntentos;
+                            Console.WriteLine("PIN inválido.");
+                            Console.WriteLine($"Intentos restantes: {restantes}");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("PIN inválida. Intente nuevamente:");
-                        Console.WriteLine("Presione cualquier tecla para volver a intentar");
-                        Console.ReadKey();
-                        Console.Clear();
-                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ya no posee más intentos para reiniciar las estadísticas");
                 }
                 break;
             }
