@@ -14,8 +14,6 @@ string ImpactoPredominante;
 
 double porcentajeAprobacion;
 
-int intentos = 10;
-
 do
 {
     Console.WriteLine();
@@ -358,6 +356,8 @@ do
             }
         case 4:
             {
+                int intentos = 3;
+                int restantes;
                 if (intentos > 0)
                 {
                     for (int contadorIntentos = 1; contadorIntentos <= intentos; contadorIntentos++)
@@ -382,7 +382,7 @@ do
                         }
                         else
                         {
-                            int restantes = intentos - contadorIntentos;
+                            restantes = intentos - contadorIntentos;
                             Console.WriteLine("PIN inválido.");
                             Console.WriteLine($"Intentos restantes: {restantes}");
                             Console.ReadKey();
