@@ -356,14 +356,34 @@ do
             }
         case 4:
             {
-                contadorTotalEvaluados = 0;
-                contadorPublicados = 0;
-                contadorRechazados = 0;
-                contadorEnRevision = 0;
-                contadorImpactoAlto = 0;
-                contadorImppactoMedio = 0;
-                contadorImpactoBajo = 0;
-                Console.WriteLine("Se logrado con exito el reinicio de estadisticas");
+                int intentos = 3;
+                int contadorIntentos = 1;
+                for (contadorIntentos=1; contadorIntentos<=intentos; contadorIntentos++)
+                {
+                    int PIN;
+                    bool correctoPIN;
+                    Console.WriteLine("Ingrese el PIn correspondiente para porder reiniciar las estadisticas: ");
+                    correcto=int.TryParse( Console.ReadLine(), out PIN);
+                    if (PIN==1234)
+                    {
+                        contadorTotalEvaluados = 0;
+                        contadorPublicados = 0;
+                        contadorRechazados = 0;
+                        contadorEnRevision = 0;
+                        contadorImpactoAlto = 0;
+                        contadorImppactoMedio = 0;
+                        contadorImpactoBajo = 0;
+                        Console.WriteLine("Se logrado con exito el reinicio de estadisticas");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("PIN inválida. Intente nuevamente:");
+                        Console.WriteLine("Presione cualquier tecla para volver a intentar");
+                        Console.ReadKey();
+                        Console.Clear();
+                    }
+                }
                 break;
             }
         case 5:
@@ -398,7 +418,6 @@ do
                 }
 
                 Console.WriteLine("Resumen Final");
-                Console.WriteLine("Mostrar estadísticas de la sesión");
                 Console.WriteLine($"Total evaluados: {contadorTotalEvaluados}");
                 Console.WriteLine($"Total Publicados: {contadorPublicados}");
                 Console.WriteLine($"Total rechazados: {contadorRechazados}");
