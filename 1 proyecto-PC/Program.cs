@@ -70,7 +70,7 @@ do
                     bool correctoDminutos;
                     while (true)
                     {
-                        Console.WriteLine("Ingrese la duracion en minutos: (0-240) ");
+                        Console.WriteLine("Ingrese la duracion en minutos del contenido: (0-240) ");
                         correctoDminutos = double.TryParse(Console.ReadLine(), out duracionMinutos);
                         if (correctoDminutos && duracionMinutos >= 0 && duracionMinutos <= 240)
                         {
@@ -283,6 +283,20 @@ do
 
                 }
                 resultadoDecisionFinal = decisionFinal();
+
+                void resultadosFinales()
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Mostra Proceso Realizado");
+                    Console.WriteLine($"Resultado de Tipo de Contenido: {resultadoTipoContenido}");
+                    Console.WriteLine($"Resultado de Duracion en Minutos: {resultadoDuracionMinutos}");
+                    Console.WriteLine($"Resultado de Clasificacion de Edad: {resultadoClasificacionEdad}");
+                    Console.WriteLine($"Resultado de Hora Progamada: {resultadoHoraProgamada}");
+                    Console.WriteLine($"Resultado de Nivel de Produccion: {resultadoNivelProduccion}");
+                    Console.WriteLine($"Resultados de Validacion Tecnica: {resultadosValidacionTecnica}");
+                    Console.WriteLine($"Resultado de Clasificacion deImpacto: {resultadoClasificacionImpacto}");
+                    Console.WriteLine($"Resultado de Decision Final: {resultadoDecisionFinal}");
+                }
                 break;
             }
         case 2:
